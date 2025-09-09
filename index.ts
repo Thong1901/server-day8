@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-    origin: ["https://cv.thongmai.id.vn", "*", "http://localhost:80", "https://xxxx.cloudfront.net"],
+    origin: ["https://cv.thongmai.id.vn", "http://localhost:80", "https://xxxx.cloudfront.net"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));

@@ -17,14 +17,14 @@ const auth_1 = __importDefault(require("./middleware/auth"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: ["https://cv.thongmai.id.vn", "*", "http://localhost:80", "https://xxxx.cloudfront.net"],
+    origin: ["https://cv.thongmai.id.vn", "http://localhost:80", "https://xxxx.cloudfront.net"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
+app.use('/api', routeUsers_1.default);
 app.use(express_1.default.json());
 app.use(auth_1.default);
 app.use('/api', routeCategory_1.default);
-app.use('/api', routeUsers_1.default);
 app.use('/api', routeDashboard_1.default);
 app.use('/api', routeTask_1.default);
 app.use('/api', routeSalesGrowth_1.default);
