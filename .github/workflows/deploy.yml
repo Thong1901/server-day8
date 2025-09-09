@@ -1,4 +1,4 @@
-name: CI/CD Node.js + Vue3 (pnpm)
+name: CI/CD Node.js(pnpm)
 
 on:
   push:
@@ -25,14 +25,10 @@ jobs:
           corepack enable
           corepack prepare pnpm@latest --activate
           pnpm install
-          pnpm run build
 
       # 4. Install dependencies
       - name: Install dependencies
         run: pnpm install
-
-      - name: Build project
-        run: npx pnpm run build
 
       # 6. Deploy dist/ + backend code
       - name: Deploy to server
