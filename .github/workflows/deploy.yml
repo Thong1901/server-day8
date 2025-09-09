@@ -43,7 +43,6 @@ jobs:
             dist/
             package.json
             pnpm-lock.yaml
-            index.js       # file backend chính
           remote_path: /var/www
           remote_user: ${{ secrets.DEPLOY_USER }}
           remote_host: ${{ secrets.DEPLOY_HOST }}
