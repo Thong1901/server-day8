@@ -27,6 +27,12 @@ jobs:
           pnpm install
           pnpm run build
 
+      # 4. Install dependencies
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build project
+        run: npx pnpm run build
 
       # 6. Deploy dist/ + backend code
       - name: Deploy to server
