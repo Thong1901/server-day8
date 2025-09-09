@@ -1,12 +1,20 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const express_2 = __importDefault(require("express"));
+const auth_1 = __importDefault(require("../middleware/auth"));
+const app = (0, express_2.default)();
 const controllerUsers_1 = require("../controllers/controllerUsers");
+app.use(express_2.default.json());
 const router = (0, express_1.Router)();
-router.get('/users', controllerUsers_1.getUsers);
-router.get('/users/profile', controllerUsers_1.getUserProfile);
-router.get('/users/:id', controllerUsers_1.getUserById);
 router.post('/users', controllerUsers_1.postUser);
 router.post('/users/password', controllerUsers_1.RegisterUser);
 router.post('/users/login', controllerUsers_1.loginUser);
+app.use(auth_1.default);
+router.get('/users', controllerUsers_1.getUsers);
+router.get('/users/profile', controllerUsers_1.getUserProfile);
+router.get('/users/:id', controllerUsers_1.getUserById);
 exports.default = router;
