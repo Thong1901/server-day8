@@ -1,4 +1,4 @@
-name: CI/CD Node.js
+name: CI/CD Node.js + Vue3 (pnpm)
 
 on:
   push:
@@ -18,27 +18,39 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm'
+          cache: 'pnpm'
 
-      # 3. Cài dependencies
+      # 3. Setup pnpm
+      - name: Setup pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
+      # 4. Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
-      # 6. Deploy dist/ lên server
+      # 5. Build project (Vue 3)
+      - name: Build project
+        run: pnpm run build
+
+      # 6. Deploy dist/ + backend code
       - name: Deploy to server
         uses: burnett01/rsync-deployments@7.1.0
         with:
           switches: -avzr --delete
-          path: dist/
-                package.json
-                package-lock.json
+          path: |
+            dist/
+            package.json
+            pnpm-lock.yaml
+            server.js         # nếu file backend entry point khác, sửa lại
           remote_path: /var/www
           remote_user: ${{ secrets.DEPLOY_USER }}
           remote_host: ${{ secrets.DEPLOY_HOST }}
           remote_port: ${{ secrets.DEPLOY_PORT }}
           remote_key: ${{ secrets.DEPLOY_KEY }}
 
-      # 7. SSH vào server để restart app bằng pm2
+      # 8. Install dependencies production + restart PM2
       - name: Restart app with PM2
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -48,5 +60,5 @@ jobs:
           port: ${{ secrets.DEPLOY_PORT }}
           script: |
             cd /var/www
-            npm install --production || true
-            pm2 restart index.js || pm2 start index.js
+            pnpm install --prod || true
+            pm2 restart server.js || pm2 start server.js
