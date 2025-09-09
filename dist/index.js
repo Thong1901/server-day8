@@ -18,7 +18,8 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: ["https://cv.thongmai.id.vn", "http://localhost:80", "https://dfur451rldoz.cloudfront.net"],
+    // origin: ["https://cv.thongmai.id.vn", "http://localhost:80", "https://dfur451rldoz.cloudfront.net"],
+    origin: "*",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
