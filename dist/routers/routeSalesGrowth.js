@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const controllerSalesGrowth_1 = require("../controllers/controllerSalesGrowth");
+const router = (0, express_1.Router)();
+router.get('/sales-growth/latest', controllerSalesGrowth_1.getLatestSalesGrowth);
+router.get('/sales-growth/:id', controllerSalesGrowth_1.getSalesGrowth);
+router.get('/sales-growth/date-range', controllerSalesGrowth_1.getSalesGrowthByDateRange);
+router.post('/sales-growth', controllerSalesGrowth_1.postSalesGrowth);
+exports.default = router;

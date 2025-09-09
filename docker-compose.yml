@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  app:
+    image: thongmai1901/server-day8:latest
+    container_name: node-app
+    restart: always
+    environment:
+      NODE_ENV: production
+      VIRTUAL_HOST: 159.65.9.94
+      VIRTUAL_PORT: 5000
+    expose:
+      - "5000"
+    networks:
+      - app-network
+
+  nginx:
+    image: jwilder/nginx-proxy:latest
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"    # HTTP
+      - "443:443"  # HTTPS nếu cần
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+networks:
+  app-network:
+    driver: bridge

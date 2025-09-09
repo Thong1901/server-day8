@@ -1,0 +1,55 @@
+CREATE TABLE Users (
+    UserID SERIAL PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Role VARCHAR(100),
+    Email VARCHAR(150) UNIQUE NOT NULL,
+    Phone VARCHAR(20),
+    Instagram VARCHAR(150),
+    Twitter VARCHAR(150),
+    AvatarURL TEXT,
+    PasswordHash VARCHAR(255) NOT NULL
+);
+-- Bảng danh mục / template
+CREATE TABLE Categories (
+    CategoryID SERIAL PRIMARY KEY,
+    CategoryName VARCHAR(100) NOT NULL,
+    TechStack VARCHAR(200),
+    ViewCount INT DEFAULT 0,
+    Growth INT DEFAULT 0
+);
+-- Bảng tăng trưởng doanh số
+CREATE TABLE SalesGrowth (
+    GrowthID SERIAL PRIMARY KEY,
+    UserID INT REFERENCES Users(UserID) ON DELETE CASCADE,
+    USP NUMERIC(5,2),   -- % tăng trưởng (ví dụ: 23.00)
+    STP NUMERIC(5,2),   -- % giảm (ví dụ: -2.00)
+    Timeline DATE DEFAULT CURRENT_DATE
+);
+-- Bảng nhiệm vụ
+CREATE TABLE Tasks (
+    TaskID SERIAL PRIMARY KEY,
+    UserID INT REFERENCES Users(UserID) ON DELETE CASCADE,
+    TaskTitle VARCHAR(200) NOT NULL,
+    TaskTime TIME,
+    Status VARCHAR(50) CHECK (Status IN ('Pending', 'In Progress', 'Completed')),
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+-- Bảng tiến độ công việc
+CREATE TABLE WorkProgress (
+    ProgressID SERIAL PRIMARY KEY,
+    UserID INT REFERENCES Users(UserID) ON DELETE CASCADE,
+    PendingTasks INT DEFAULT 0,
+    CompletedTasks INT DEFAULT 0,
+    InProgressTasks INT DEFAULT 0,
+    TotalTasks INT DEFAULT 0
+);
+-- Bảng doanh thu hằng ngày
+CREATE TABLE DailySales (
+    SaleID SERIAL PRIMARY KEY,
+    UserID INT REFERENCES Users(UserID) ON DELETE CASCADE,
+    TemplateName VARCHAR(200),
+    Revenue NUMERIC(10,2) DEFAULT 0,
+    SaleDate DATE DEFAULT CURRENT_DATE
+);

@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "ES2018", // Or "ES2017", "ESNext"
+        "module": "CommonJS", // Or "ESNext" if using ES modules
+        "lib": [
+            "ES2018",
+            "DOM"
+        ], // Or ["ES2017", "DOM"], ["ESNext", "DOM"]
+        "baseUrl": "./",
+        "outDir": "./dist",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true
+    },
+    "include": [
+        "**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
