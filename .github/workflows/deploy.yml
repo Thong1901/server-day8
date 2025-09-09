@@ -21,12 +21,13 @@ jobs:
           cache: 'pnpm'
 
       # 3. Setup pnpm
-      - name: Setup pnpm
+      - name: Setup pnpm and install dependencies
         run: |
           corepack enable
           corepack prepare pnpm@latest --activate
           export PATH="$HOME/.local/share/pnpm:$PATH"
-          pnpm -v
+          pnpm install
+          pnpm run build
 
       # 4. Install dependencies
       - name: Install dependencies
