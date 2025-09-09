@@ -49,5 +49,5 @@ jobs:
           port: ${{ secrets.DEPLOY_PORT }}
           script: |
             cd /var/www
-            pnpm install --prod || true
+            npm install
             pm2 restart index.js || pm2 start index.js

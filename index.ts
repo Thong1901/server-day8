@@ -18,10 +18,10 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
+app.use('/api', routerUsers);
 app.use(express.json());
 app.use(jwt);
 app.use('/api', routerCategory);
-app.use('/api', routerUsers);
 app.use('/api', routerDashboard);
 app.use('/api', routerTask);
 app.use('/api', routerSalesGrowth);
