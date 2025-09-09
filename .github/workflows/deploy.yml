@@ -13,31 +13,56 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 2. Cài pnpm
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
           run_install: false
 
+      # 3. Setup Node.js
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: 'pnpm'
 
+      # 4. Cài dependencies
       - name: Install dependencies
         run: pnpm install
+
+      # 5. Build project (Vue3/Node.js)
+      - name: Build project
+        run: pnpm run build
 
       # 6. Deploy dist/ + backend code
       - name: Deploy to server
         uses: burnett01/rsync-deployments@7.1.0
         with:
           switches: -avzr --delete
-          path: dist/ package.json pnpm-lock.yaml
+          path: |
+            dist/
+            package.json
+            pnpm-lock.yaml
+            index.js       # file backend chính
           remote_path: /var/www
           remote_user: ${{ secrets.DEPLOY_USER }}
           remote_host: ${{ secrets.DEPLOY_HOST }}
           remote_port: ${{ secrets.DEPLOY_PORT }}
           remote_key: ${{ secrets.DEPLOY_KEY }}
+
+      # 7. Tạo file .env trên server
+      - name: Create .env file on server
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          script: |
+            cd /var/www
+            echo "Neon_DB=${{ secrets.Neon_DB }}" > .env
+            echo "PORT=${{ secrets.PORT }}" >> .env
+            echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
 
       # 8. Install dependencies production + restart PM2
       - name: Restart app with PM2
@@ -49,5 +74,5 @@ jobs:
           port: ${{ secrets.DEPLOY_PORT }}
           script: |
             cd /var/www
-            npm install
+            pnpm install --prod || true
             pm2 restart index.js || pm2 start index.js
