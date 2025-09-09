@@ -12,6 +12,7 @@ import jwt from "./middleware/auth"
 dotenv.config();
 const app = express();
 
+app.use(express.json());
 app.use(cors({
     origin: ["https://cv.thongmai.id.vn", "http://localhost:80", "https://xxxx.cloudfront.net"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -19,7 +20,6 @@ app.use(cors({
 }));
 
 app.use('/api', routerUsers);
-app.use(express.json());
 app.use(jwt);
 app.use('/api', routerCategory);
 app.use('/api', routerDashboard);
