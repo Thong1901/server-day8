@@ -13,14 +13,16 @@ const routeUsers_1 = __importDefault(require("./routers/routeUsers"));
 const routeSalesGrowth_1 = __importDefault(require("./routers/routeSalesGrowth"));
 const routeWorkProgress_1 = __importDefault(require("./routers/routeWorkProgress"));
 const routeSale_1 = __importDefault(require("./routers/routeSale"));
+const auth_1 = __importDefault(require("./middleware/auth"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: ["https://cv.thongmai.id.vn", "*", "http://localhost:80"],
+    origin: ["https://cv.thongmai.id.vn", "*", "http://localhost:80", "https://xxxx.cloudfront.net"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
 app.use(express_1.default.json());
+app.use(auth_1.default);
 app.use('/api', routeCategory_1.default);
 app.use('/api', routeUsers_1.default);
 app.use('/api', routeDashboard_1.default);

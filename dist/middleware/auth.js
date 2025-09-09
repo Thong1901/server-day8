@@ -11,7 +11,7 @@ const authMiddleware = (req, res, next) => {
         // Extract the token
         const token = authHeader.split(' ')[1];
         // Verify token
-        const decoded = jwt.verify(token, process.env.JWT_KEY);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         // Add user data to request
         req.user = decoded;
         // Proceed to the protected route
