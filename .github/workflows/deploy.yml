@@ -25,6 +25,8 @@ jobs:
         run: |
           corepack enable
           corepack prepare pnpm@latest --activate
+          export PATH="$HOME/.local/share/pnpm:$PATH"
+          pnpm -v
 
       # 4. Install dependencies
       - name: Install dependencies
