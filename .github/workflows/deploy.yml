@@ -20,12 +20,12 @@ jobs:
           node-version: 22
           cache: 'pnpm'
 
-      # 3. Setup pnpm
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          version: 10
-          run_install: false
+      - name: Setup pnpm, install dependencies, build
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+          pnpm install
+          pnpm run build
 
       # 4. Install dependencies
       - name: Install dependencies
