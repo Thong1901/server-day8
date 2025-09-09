@@ -27,13 +27,6 @@ jobs:
           pnpm install
           pnpm run build
 
-      # 4. Install dependencies
-      - name: Install dependencies
-        run: pnpm install
-
-      # 5. Build project (Vue 3)
-      - name: Build project
-        run: pnpm run build
 
       # 6. Deploy dist/ + backend code
       - name: Deploy to server
