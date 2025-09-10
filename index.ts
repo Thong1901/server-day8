@@ -20,6 +20,10 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+}
+);
 app.use('/api', routerUsers);
 app.use(jwt);
 app.use('/api', routerCategory);
@@ -28,10 +32,6 @@ app.use('/api', routerTask);
 app.use('/api', routerSalesGrowth);
 app.use('/api', routerWorkProgress);
 app.use('/api', routesale);
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-}
-);
 
 
 app.listen(process.env.PORT, () => {

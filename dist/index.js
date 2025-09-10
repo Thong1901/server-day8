@@ -23,6 +23,9 @@ app.use((0, cors_1.default)({
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
 app.use('/api', routeUsers_1.default);
 app.use(auth_1.default);
 app.use('/api', routeCategory_1.default);
@@ -31,9 +34,6 @@ app.use('/api', routeTask_1.default);
 app.use('/api', routeSalesGrowth_1.default);
 app.use('/api', routeWorkProgress_1.default);
 app.use('/api', routeSale_1.default);
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
 });
